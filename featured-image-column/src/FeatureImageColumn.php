@@ -74,7 +74,7 @@ class FeatureImageColumn
         $this->registerSettings();
 
         // Only continue if we're on the 'edit.php' page(s)
-        if (empty($pagenow) || $pagenow !== 'edit.php' && \defined('DOING_AJAX') && !\DOING_AJAX) {
+        if (empty($pagenow) || ($pagenow !== 'edit.php' && \defined('DOING_AJAX') && !\DOING_AJAX)) {
             return;
         }
 
@@ -197,7 +197,7 @@ class FeatureImageColumn
     protected function getTheImage(?int $post_id): string
     {
         if (\has_post_thumbnail($post_id)) {
-            return \get_the_post_thumbnail($post_id);
+            return \get_the_post_thumbnail($post_id, [50, 50]);
         }
 
         $default = \plugins_url('images/default.png', $this->file);
